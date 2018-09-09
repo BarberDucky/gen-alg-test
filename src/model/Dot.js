@@ -8,14 +8,13 @@ export default class Dot {
         }
         this.fitness = 0
         this.moves = []
-        if (parent1 === undefined) {
-            for (let i = 0; i < 1000; i++) {
-                this.moves[i] = {
-                    x: Math.floor((Math.random() * 100)) % 3 - 1,
-                    y: Math.floor((Math.random() * 100)) % 3 - 1
-                }
+        for (let i = 0; i < 1000; i++) {
+            this.moves[i] = {
+                x: Math.floor((Math.random() * 100)) % 3 - 1,
+                y: Math.floor((Math.random() * 100)) % 3 - 1
             }
-        } else {
+        }
+        if (parent1 !== undefined) {
             this.inherit(parent1, parent2)
         }
     }
@@ -50,7 +49,14 @@ export default class Dot {
 
     inherit(parent1, parent2) {
         let range = this.getParentRange()
-        this.moves.splice(range.start, range.count)
+        const parentOne = [...parent1.moves]
+        const parentOneMoves = parentOne.splice(range.start, range.count)
+        Array.prototype.splice(this.moves, [range.start, range.count].concat(parentOneMoves))
+
+        range = this.getParentRange()
+        const parentTwo = [...parent2.moves]
+        const parentTwoMoves = parentTwo.splice(range.start, range.count)
+        Array.prototype.splice(this.moves, [range.start, range.count].concat(parentTwoMoves))
     }
 
     getParentRange() {

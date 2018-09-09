@@ -23,13 +23,14 @@ export default class Population {
                 const parent1 = Math.floor((Math.random() * 100)) % 10
                 const parent2 = Math.floor((Math.random() * 100)) % 10
                 const newDot = new Dot(this.dots[parent1], this.dots[parent2])
+                console.log('New dot: ', newDot)
                 return newDot
             }
         })
     }
 
     findFittest() {
-        this.dots.forEach(dot => dot.getFitness)
+        //this.dots.forEach(dot => dot.getFitness)
         this.dots.sort((a, b) => b.fitness - a.fitness)
         return this.dots[0]
     }
